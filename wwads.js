@@ -1,4 +1,4 @@
-//万维广告 js
+// 万维广告 js
 
 (function(){
 var _sr = document.createElement('script');
@@ -22,3 +22,16 @@ _sr.src = 'https://wwads.cn/code/install';
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(bp, s);
 })();
+
+
+//foxpush
+
+ var _foxpush = _foxpush || [];
+ _foxpush.push(['_setDomain', 'zhaodaoai']);
+ (function(){
+     var foxscript = document.createElement('script');
+     foxscript.src = '//cdn.foxpush.net/sdk/foxpush_SDK_min.js';
+     foxscript.type = 'text/javascript';
+     foxscript.async = 'true';
+     var fox_s = document.getElementsByTagName('script')[0];
+     fox_s.parentNode.insertBefore(foxscript, fox_s);})();
