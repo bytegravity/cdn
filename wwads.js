@@ -10,7 +10,7 @@ _sr.async = true;
 _sr.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
 (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(_sr);
 })();
-(adsbygoogle = window.adsbygoogle || []).push({});
+
 
 // 百度 push 提交 url
 
