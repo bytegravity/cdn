@@ -51,6 +51,9 @@ function loadGoogleAds() {
         }
         if (backfillads.length > 0) {
             clearInterval(interval);
+            //add a key and set it value to now's unix time then add it into backfillads div attribute
+            var now = new Date().getTime();
+            backfillads[0].setAttribute("data-time", now);
             setTimeout(function() { (adsbygoogle = window.adsbygoogle || []).push({});
             },
             2000);
