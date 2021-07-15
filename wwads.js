@@ -1,7 +1,7 @@
 // 万维广告 js
 function docReady(t){"complete"===document.readyState||"interactive"===document.readyState?setTimeout(t,1):document.addEventListener("DOMContentLoaded",t)}function _AdBlockInit(){$ids=[];var t=setInterval(function(){if($blocks=document.getElementsByClassName("wwads-cn"),$blocks.length>0){clearInterval(t);for(var e=0;e<$blocks.length;e++)$block=$blocks[e],$id=$block.getAttribute("data-id"),$block.setAttribute("id","wwads-cn-"+$id),$ids.push($id);_SendAdRequest($ids)}},300)}function _SendAdRequest(t){$response=[],request=new XMLHttpRequest,request.open("GET","https://wwads.cn/code/banners?blocks="+t,!0),request.onload=function(){if(request.status>=200&&request.status<400){data=JSON.parse(request.responseText);for(var t=0;t<data.blocks.length;t++)document.getElementById("wwads-cn-"+data.blocks[t].id).innerHTML=data.blocks[t].html}},request.onerror=function(){document.getElementById("wwads-cn-"+data.blocks[k].id).innerHTML="Connection Failed!"},request.send()}docReady(function(){_AdBlockInit()}),function(t){var e=t.pushState;t.pushState=function(n){return"function"==typeof t.onpushstate&&t.onpushstate({state:n}),e.apply(t,arguments)}}(window.history),window.onpopstate=history.onpushstate=function(t){setTimeout(function(){_AdBlockInit()},1e3)};
 
-      //fire the loadGoogleAds function when the page is fully loaded
+//fire the loadGoogleAds function when the page is fully loaded
       docReady(function () {
         loadGoogleAds();
       });
@@ -9,7 +9,6 @@ function docReady(t){"complete"===document.readyState||"interactive"===document.
       //fire the loadGoogleAds function for SPA
       window.onpopstate = history.onpushstate = function (event) {
         setTimeout(function () {
-          if(document.getElementsByClassName("wwads-cn")[0].getElementsByTagName("ins").length > 0){_AdBlockInit();}
           loadGoogleAds();
         }, 1000);
       };
@@ -39,6 +38,7 @@ function docReady(t){"complete"===document.readyState||"interactive"===document.
             try {
               (adsbygoogle = window.adsbygoogle || []).push({});
             } catch (e) {
+              _AdBlockInit();
               i++;
             }
           } else {
