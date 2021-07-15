@@ -8,8 +8,8 @@ function docReady(t){"complete"===document.readyState||"interactive"===document.
 
       //fire the loadGoogleAds function for SPA
       window.onpopstate = history.onpushstate = function (event) {
-        if(document.getElementsByClassName("wwads-cn")[0].getElementsByTagName("ins").length > 0){_AdBlockInit();}
         setTimeout(function () {
+          if(document.getElementsByClassName("wwads-cn")[0].getElementsByTagName("ins").length > 0){_AdBlockInit();}
           loadGoogleAds();
         }, 1000);
       };
