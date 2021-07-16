@@ -1,5 +1,11 @@
-// 万维广告 js
-function docReady(t){"complete"===document.readyState||"interactive"===document.readyState?setTimeout(t,1):document.addEventListener("DOMContentLoaded",t)}function _AdBlockInit(){$ids=[];var t=setInterval(function(){if($blocks=document.getElementsByClassName("wwads-cn"),$blocks.length>0){clearInterval(t);for(var e=0;e<$blocks.length;e++)$block=$blocks[e],$id=$block.getAttribute("data-id"),$block.setAttribute("id","wwads-cn-"+$id),$ids.push($id);_SendAdRequest($ids)}},300)}function _SendAdRequest(t){$response=[],request=new XMLHttpRequest,request.open("GET","https://wwads.cn/code/banners?blocks="+t,!0),request.onload=function(){if(request.status>=200&&request.status<400){data=JSON.parse(request.responseText);for(var t=0;t<data.blocks.length;t++)document.getElementById("wwads-cn-"+data.blocks[t].id).innerHTML=data.blocks[t].html}},request.onerror=function(){document.getElementById("wwads-cn-"+data.blocks[k].id).innerHTML="Connection Failed!"},request.send()}docReady(function(){_AdBlockInit()}),function(t){var e=t.pushState;t.pushState=function(n){return"function"==typeof t.onpushstate&&t.onpushstate({state:n}),e.apply(t,arguments)}}(window.history),window.onpopstate=history.onpushstate=function(t){setTimeout(function(){_AdBlockInit()},1e3)};
+ // 万维广告 js
+(function(){
+var _sr = document.createElement('script');
+_sr.type = 'text/javascript';
+_sr.async = true;
+_sr.src = 'https://cdn.wwads.cn/js/makemoney.js';
+(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(_sr);
+})();
 
  //fire the loadGoogleAds function when the page is fully loaded
   docReady(function () {
@@ -48,7 +54,36 @@ function docReady(t){"complete"===document.readyState||"interactive"===document.
     }, 1000);
   }
 
+// Function called if AdBlock is detected
+		function ABDetected() {
+			var adBlockDetected_div = document.createElement("div");
+	    adBlockDetected_div.style.cssText = "position: fixed; top: 0; left: 0; width: 100%; background: #fc6600; color: #fff; z-index: 9999999999; font-size: 14px; text-align: center; line-height: 1.5; font-weight: bold; padding: 10px;";
+	    adBlockDetected_div.innerHTML = "我们的网站广告并不跟踪您的隐私，为了支持本站的长期运营，请您关闭广告拦截器，或将本站加入广告拦截器的白名单";
+	    document.getElementsByTagName("body")[0].appendChild(adBlockDetected_div);
+      // add a close button to the right side of the div
+      var adBlockDetected_close = document.createElement("div");
+      adBlockDetected_close.style.cssText = "position: fixed; top: 0; right: 0; width: 30px; height: 30px; background: #fc6600; color: #fff; z-index: 9999999999; text-align: center; line-height: 30px; font-size: 14px; font-weight: bold; cursor: pointer;";
+      adBlockDetected_close.innerHTML = "×";
+      adBlockDetected_div.appendChild(adBlockDetected_close);
+      // add a click event to the close button
+      adBlockDetected_close.onclick = function() {
+      this.parentNode.parentNode.removeChild(this.parentNode);
+      };
+		};
 
+    function docReady(t) {
+        "complete" === document.readyState ||
+        "interactive" === document.readyState
+          ? setTimeout(t, 1)
+          : document.addEventListener("DOMContentLoaded", t);
+    }
+
+    //detect if wwads fire function is blocked
+    docReady(function () {
+    if( window._AdBlockInit === undefined ){
+        ABDetected();
+    }
+    });
 
 // 百度 push 提交 url
 
