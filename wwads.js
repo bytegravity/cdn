@@ -1,58 +1,40 @@
- // 万维广告 js
-(function(){
-var _sr = document.createElement('script');
-_sr.type = 'text/javascript';
-_sr.async = false;
-_sr.src = 'https://cdn.wwads.cn/js/makemoney.js';
-(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(_sr);
-})();
+$(function () {
+        //获取用户浏览器设置的语言，优先获取本地缓存的内容，如果没有获取到则默认为中文
+        var broLang = localStorage.getItem("locale") || window.navigator.language.toLowerCase() || "zh-cn";
 
- //fire the loadGoogleAds function when the page is fully loaded
-  docReady(function () {
-    loadGoogleAds();
-  });
+        //此处需改 data-id 为你的广告单元ID
+        let wwadsDiv = '<div class="wwads-cn wwads-horizontal" data-id="38" style="max-width:300px;background-color:#fff;margin-top:0px;box-shadow:0 1px 3px rgb(26 26 26 / 10%)"></div>';
 
-  //fire the loadGoogleAds function for SPA
-  window.onpopstate = history.onpushstate = function (event) {
-    setTimeout(function () {
-      loadGoogleAds();
-    }, 1000);
-  };
+        //把用户的语言写入缓存，供下次获取使用
+        localStorage.setItem("locale", broLang);
 
-  //load google ads and send ad request
-  function loadGoogleAds() {
-    var google_sr = document.createElement("script");
-    google_sr.type = "text/javascript";
-    google_sr.async = true;
-    google_sr.src =
-      "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-    (
-      document.getElementsByTagName("head")[0] ||
-      document.getElementsByTagName("body")[0]
-    ).appendChild(google_sr);
-
-    //try to find the backfillads and fire the ad request
-    var backfillads = document
-      .getElementsByClassName("wwads-cn")[0]
-      .getElementsByTagName("ins");
-    var i = 0;
-    var try2loadads = setInterval(function () {
-      if (i > 3) {
-        clearInterval(try2loadads);
-        return;
-      }
-      if (backfillads.length > 0) {
-        clearInterval(try2loadads);
-        try {
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        } catch (e) {
-          i++;
+        //判断用户的语言，跳转到不同的地方
+        if (broLang.startsWith("zh")) {
+            //针对中文访客展示万维广告
+            $(".placeholderads").replaceWith(wwadsDiv);
+            var _sr = document.createElement('script');
+            _sr.type = 'text/javascript';
+            _sr.async = true;
+            _sr.src = 'https://cdn.wwads.cn/js/makemoney.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(_sr);
+        } else {
+            $(".ads").replaceWith(
+                '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7678238486983235"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7678238486983235"
+     data-ad-slot="6612299134"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>'
+            );
         }
-      } else {
-        i++;
-      }
-    }, 1000);
-  }
+});
+
+
 
 // Function called if AdBlock is detected
 		function ABDetected() {
